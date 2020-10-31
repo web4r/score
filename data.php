@@ -126,9 +126,7 @@ if(!isset($_SESSION['username'])){
   <li class="nav-item" role="presentation">
     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Nilai</a>
   </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#data" role="tab" aria-controls="contact" aria-selected="false">Data Agen</a>
-  </li>
+  
 </ul>
 <div class="tab-content" id="myTabContent">
 
