@@ -406,8 +406,14 @@ if(!isset($_SESSION['username'])){
         <h1 class="text-center">List Data Kegiatan</h1>
         <hr>
         <?php if(isset($_POST['cari'])) { 
-            
-            
+        
+        $tgl_awal = $_POST['tgl_awal'];
+        $tgl_akhir = $_POST['tgl_akhir'];
+        $id_user = $_POST['id_user'];
+
+        $queryCountNilai = mysqli_query($conn,"SELECT SUM(nilai) as total FROM agen 
+        WHERE agen.id_user = '$id_user' AND agen.tgl_kegiatan BETWEEN '$tgl_awal' AND '$tgl_akhir' ");
+        $resultTotalNilai = mysqli_fetch_array($queryCountNilai);    
         ?>
 
             
@@ -415,6 +421,8 @@ if(!isset($_SESSION['username'])){
             <?php echo $_POST['tgl_awal']?>
             <?php echo $_POST['tgl_akhir']?>
         <hr>
+            <h3>Total Nilai : <?php echo $resultTotalNilai['total']; ?> </h3>
+            <hr>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -427,9 +435,6 @@ if(!isset($_SESSION['username'])){
                 <tbody>
                     <?php  
     
-                        $tgl_awal = $_POST['tgl_awal'];
-                        $tgl_akhir = $_POST['tgl_akhir'];
-                        $id_user = $_POST['id_user'];
                     
                                 
                         $query = mysqli_query($conn,"SELECT * FROM agen 
@@ -458,6 +463,7 @@ if(!isset($_SESSION['username'])){
                 </tbody>
     
             </table>
+            
             <?php }else{ ?>
                 <h2>Tampilan Data Awal</h2>
         <hr>
