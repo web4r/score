@@ -344,9 +344,9 @@ if(!isset($_SESSION['username'])){
         <form method="post">
 
             <label for="">Mulai Tanggal Kegiatan</label>
-            <input type="date" name="tgl_kegiatan" class="form-control" >
+            <input type="date" name="tgl_awal" class="form-control" >
             <label for="">Akhir Tanggal Kegiatan</label>
-            <input type="date" name="tgl_kegiatan" class="form-control" >
+            <input type="date" name="tgl_akhir" class="form-control" >
 
             <label for="">Pilih User</label>
             
@@ -405,8 +405,15 @@ if(!isset($_SESSION['username'])){
         <div class="col-md-6">
         <h1 class="text-center">List Data Kegiatan</h1>
         <hr>
-        <?php if(isset($_POST['cari'])){ ?>
+        <?php if(isset($_POST['cari'])) { 
+            
+            
+        ?>
+
+            
             <h2>Tampilan Setelah Cari Data</h2>
+            <?php echo $_POST['tgl_awal']?>
+            <?php echo $_POST['tgl_akhir']?>
         <hr>
             <table class="table table-bordered">
                 <thead>
@@ -420,9 +427,18 @@ if(!isset($_SESSION['username'])){
                 <tbody>
                     <?php  
     
-                        $query = mysqli_query($conn,"SELECT * FROM agen INNER JOIN kegiatan on kegiatan.id_kegiatan = agen.id_kegiatan INNER JOIN user on user.id_user = agen.id_user ");
+                        $tgl_awal = $_POST['tgl_awal'];
+                        $tgl_akhir = $_POST['tgl_akhir'];
+                        $id_user = $_POST['id_user'];
+                    
+                                
+                        $query = mysqli_query($conn,"SELECT * FROM agen 
+                        INNER JOIN kegiatan on kegiatan.id_kegiatan = agen.id_kegiatan 
+                        INNER JOIN user on user.id_user = agen.id_user 
+                        WHERE agen.id_user = '$id_user' AND agen.tgl_kegiatan BETWEEN '$tgl_awal' AND '$tgl_akhir' ");
                         while($row = mysqli_fetch_array($query))
                         {
+                           
                             $data_tgl = $row['tgl_kegiatan'];
                             $data_kegiatan = $row['nama_kegiatan'];
                             $data_nilai = $row['nilai'];
@@ -451,7 +467,7 @@ if(!isset($_SESSION['username'])){
                         <th>Tanggal Kegiatan</th>
                         <th>Nama</th>
                         <th>Nama Kegiatan</th>
-                        <th>Nilai</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -470,7 +486,7 @@ if(!isset($_SESSION['username'])){
                         <td><?php echo $data_tgl ?></td>
                         <td><?php echo $nama ?></td>
                         <td><?php echo $data_kegiatan ?></td>
-                        <td><?php echo $data_nilai ?></td>
+                       
                     </tr>
                     
                     <?php        
